@@ -1,4 +1,6 @@
-﻿namespace FunWithGenericCollections
+﻿using System.Security.Cryptography;
+
+namespace FunWithGenericCollections
 {
     internal class Program
     {
@@ -9,6 +11,10 @@
             UseGenericStack();
 
             UseGenericQueue();
+
+            UseSortedSet();
+
+            UseDictionary();
         }
 
         static void UseGenericList()
@@ -109,6 +115,77 @@
             {
                 Console.WriteLine($"{p.FirstName}");
             }
+        }
+
+        static void UseSortedSet()
+        {
+            Console.WriteLine("\n-> Use Sorted set");
+
+            SortedSet<Person> setOfPeople = new SortedSet<Person>(new SortPeopleByAge())
+            {
+                new Person{FirstName = "Homer", LastName = "Simpson", Age = 47},
+                new Person{FirstName = "Marge", LastName = "Simpson", Age = 45},
+                new Person{FirstName = "Lisa", LastName = "Simpson", Age = 10},
+                new Person{FirstName = "Bart", LastName = "Simpson", Age = 9}
+            };
+
+            foreach (Person p in setOfPeople)
+            {
+                Console.WriteLine(p);
+            }
+
+            setOfPeople.Add(new Person { FirstName = "Saku", LastName = "Jones", Age = 11 });
+            setOfPeople.Add(new Person { FirstName = "Mikko", LastName = "Jones", Age = 33 });
+
+            foreach (Person p in setOfPeople)
+            {
+                Console.WriteLine(p);
+            }
+        }
+
+        static void UseDictionary()
+        {
+            Console.WriteLine("\n-> Use Dictionary");
+
+            Dictionary<string, Person> peopleA = new Dictionary<string, Person>();
+
+            peopleA.Add("Homer", new Person { FirstName = "Homer", LastName = "Simpson", Age = 40 });
+            peopleA.Add("Marge", new Person { FirstName = "Marge", LastName = "Simpson", Age = 35 });
+            peopleA.Add("Lisa", new Person { FirstName = "Lisa", LastName = "Simpson", Age = 9 });
+
+            Person homer = peopleA["Homer"];
+
+            Person lisa = peopleA["Lisa"];
+
+            Console.WriteLine($"People with key 'Homer': {homer}");
+
+            Console.WriteLine($"People with key 'Lisa': {lisa}");
+
+            Console.WriteLine("\nInitilization dictionary");
+
+            Dictionary<string, Person> peopleB = new Dictionary<string, Person>()
+            {
+                {"Homer", new Person {FirstName = "Homer", LastName = "Simson", Age = 47} },
+                {"Marge", new Person {FirstName = "Marge", LastName = "Simson", Age = 45} },
+                {"Lisa", new Person {FirstName = "Lisa", LastName = "Simson", Age = 9} }
+            };
+
+            Person marge = peopleB["Marge"];
+
+            Console.WriteLine($"People with key 'Marge': {marge}");
+
+            Console.WriteLine("\nDictionary Key-Value");
+
+            Dictionary<string, Person> peopleC = new Dictionary<string, Person>()
+            {
+                ["pHomer"] = new Person { FirstName = "Homer", LastName = "Simpson", Age = 45},
+                ["pMarge"] = new Person { FirstName = "Marge", LastName = "Simpson", Age = 43},
+                ["pLisa"] = new Person { FirstName = "Lisa", LastName = "Simpson", Age = 9}
+            };
+
+            Person personHomer = peopleC["pHomer"];
+
+            Console.WriteLine($"People with key 'pHomer': {personHomer}");
         }
     }
 }
